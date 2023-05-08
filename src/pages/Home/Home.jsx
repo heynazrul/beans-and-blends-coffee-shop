@@ -28,6 +28,7 @@ const Home = () => {
         </div>
         {/* bg img right */}
       </section>
+   
     </div>
   );
 };
