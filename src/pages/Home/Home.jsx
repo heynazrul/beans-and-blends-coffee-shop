@@ -3,10 +3,11 @@ import Hero from '../../components/Hero/Hero';
 import { TbCoffee } from 'react-icons/tb';
 import { Link, useLoaderData } from 'react-router-dom';
 import Product from '../../components/Product/Product';
+import { useState } from 'react';
 
 const Home = () => {
   const loadedProduct = useLoaderData();
-  console.log(loadedProduct);
+  const [products, setProducts] = useState(loadedProduct)
   return (
     <div>
       <Hero></Hero>
@@ -32,10 +33,12 @@ const Home = () => {
         {/* Products */}
         <section className='max-w-7xl mx-auto z-10 mt-12'>
           <div className="grid gap-8 lg:grid-cols-2">
-            {loadedProduct.map((product) => (
+            {products.map((product) => (
               <Product
                 key={product._id}
-                product={product}></Product>
+                product={product}
+                products={products}
+                setProducts={setProducts}></Product>
             ))}
           </div>
         </section>

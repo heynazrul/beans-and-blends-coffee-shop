@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { HiArrowLeft } from 'react-icons/hi';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 const AddCoffe = () => {
   const handleAddCoffee = (event) => {
@@ -20,7 +20,7 @@ const AddCoffe = () => {
 
     // send data to server
 
-    fetch('http://localhost:5000/coffee', {
+    fetch('https://beans-and-blends-server-heynazrul.vercel.app/coffee', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -30,7 +30,7 @@ const AddCoffe = () => {
       .then((res) => res.json())
       .then((response) => {
         console.log(response);
-        if(response.insertedId){
+        if (response.insertedId) {
           Swal.fire({
             title: 'Success!',
             text: 'Coffee Updated Successfully',

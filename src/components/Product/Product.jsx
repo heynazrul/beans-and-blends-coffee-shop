@@ -4,7 +4,7 @@ import { MdModeEdit, MdDelete } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-const Product = ({ product }) => {
+const Product = ({ product, products, setProducts }) => {
   const { _id, photo, name, category, quantity } = product;
 
   const handleDelete = (_id) => {
@@ -20,7 +20,7 @@ const Product = ({ product }) => {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/coffee/${_id}`, {
+        fetch(`https://beans-and-blends-server-heynazrul.vercel.app/coffee/${_id}`, {
           method: 'DELETE',
         })
           .then((res) => res.json())
@@ -28,6 +28,8 @@ const Product = ({ product }) => {
             console.log(response);
             if (response.deletedCount > 0) {
               Swal.fire('Deleted!', 'Your coffee has been deleted.', 'success');
+              const remaining = products.filter((pd) => pd._id !== _id);
+              setProducts(remaining);
             }
           });
       }
