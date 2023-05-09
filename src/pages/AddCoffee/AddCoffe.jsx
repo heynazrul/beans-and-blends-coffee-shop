@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { HiArrowLeft } from 'react-icons/hi';
+import Swal from 'sweetalert2'
 
 const AddCoffe = () => {
   const handleAddCoffee = (event) => {
@@ -7,15 +8,38 @@ const AddCoffe = () => {
     const form = event.target;
 
     const name = form.name.value;
-    const chef = form.chef.value;
+    const quantity = form.quantity.value;
     const supplier = form.supplier.value;
     const taste = form.taste.value;
     const category = form.category.value;
     const details = form.details.value;
     const photo = form.photo.value;
 
-    const newCoffee = {name, chef, supplier, taste, category, details, photo};
+    const newCoffee = { name, quantity, supplier, taste, category, details, photo };
     console.log(newCoffee);
+
+    // send data to server
+
+    fetch('http://localhost:5000/coffee', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(newCoffee),
+    })
+      .then((res) => res.json())
+      .then((response) => {
+        console.log(response);
+        if(response.insertedId){
+          Swal.fire({
+            title: 'Success!',
+            text: 'Do you want to continue',
+            icon: 'success',
+            confirmButtonText: 'Cool',
+            confirmButtonColor: '#795548',
+          });
+        }
+      });
   };
   return (
     <section className=" bg-[url('/more/bg-update-coffee.png')] bg-cover">
@@ -50,11 +74,11 @@ const AddCoffe = () => {
             />
           </div>
           <div>
-            <label className="font-semibold">Chef</label>
+            <label className="font-semibold">Quantity</label>
             <input
-              type="text"
-              placeholder="Enter coffee chef"
-              name="chef"
+              type="number"
+              placeholder="Enter coffee quantity"
+              name="quantity"
               required
               className="mt-2 w-full rounded-lg border  px-3 py-2  text-gray-800 shadow-sm outline-none focus:border-brown-300"
             />
